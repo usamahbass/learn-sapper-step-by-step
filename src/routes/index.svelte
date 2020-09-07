@@ -3,10 +3,14 @@
 
     export async function preload() {
       try {
+        throw new Error("this is bad :(")
         const getData = await request.getData()
 
         return { getData }
-      } catch(e) {}
+      } catch(e) {
+        this.error(500, "There was an error in calling the api, please try again in 5 minutes.")
+        return;
+      }
     }
 </script>
 
@@ -20,6 +24,6 @@
     console.log("data", getData);
 </script>
 
-<CovidState/>
+<CovidState {...getData} />
 <CovidChart/>
 <TableContainer/>
